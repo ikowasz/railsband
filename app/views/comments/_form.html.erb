@@ -11,17 +11,13 @@
     </div>
   <% end %>
 
-  <div>
-    <%= form.label :song_id, style: "display: block" %>
-    <%= form.text_field :song_id %>
-  </div>
+  <%= form.hidden_field :song_id %>
 
-  <div>
-    <%= form.label :contents, style: "display: block" %>
+  <p>
     <%= form.textarea :contents %>
-  </div>
+  </p>
 
-  <div>
+  <p>
     <%= form.submit %>
-  </div>
+  </p>
 <% end %>

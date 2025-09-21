@@ -17,7 +17,7 @@ class MediaFilesControllerTest < ActionDispatch::IntegrationTest
 
   test "should create media_file" do
     assert_difference("MediaFile.count") do
-      post media_files_url, params: { media_file: { file: @media_file.file, name: @media_file.name, song_id: @media_file.song_id } }
+      post media_files_url, params: { media_file: { uploader: @media_file.file, name: @media_file.name, song_id: @media_file.song_id } }
     end
 
     assert_redirected_to media_file_url(MediaFile.last)
@@ -34,7 +34,7 @@ class MediaFilesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should update media_file" do
-    patch media_file_url(@media_file), params: { media_file: { file: @media_file.file, name: @media_file.name, song_id: @media_file.song_id } }
+    patch media_file_url(@media_file), params: { media_file: { uploader: @media_file.file, name: @media_file.name, song_id: @media_file.song_id } }
     assert_redirected_to media_file_url(@media_file)
   end
 

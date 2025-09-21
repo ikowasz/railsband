@@ -1,17 +1,10 @@
 <div id="<%= dom_id media_file %>">
   <p>
-    <strong>Song:</strong>
-    <%= media_file.song_id %>
+    <a href="<%= media_file.uploader.url %>">
+      <%= media_file.name %>
+      <% unless media_file.name.eql? media_file.uploader.file.filename %>
+        (<%= media_file.uploader.file.filename %>)
+      <% end %>
+    </a>
   </p>
-
-  <p>
-    <strong>Name:</strong>
-    <%= media_file.name %>
-  </p>
-
-  <p>
-    <strong>File:</strong>
-    <%= media_file.file %>
-  </p>
-
 </div>

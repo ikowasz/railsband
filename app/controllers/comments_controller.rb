@@ -1,5 +1,6 @@
 class CommentsController < ApplicationController
   before_action :set_comment, only: %i[ show edit update destroy ]
+  before_action :set_song, only: %i[ index new ]
 
   # GET /comments or /comments.json
   def index
@@ -12,7 +13,9 @@ class CommentsController < ApplicationController
 
   # GET /comments/new
   def new
-    @comment = Comment.new
+    @comment = Comment.new(
+      song: @song,
+    )
   end
 
   # GET /comments/1/edit
@@ -25,7 +28,7 @@ class CommentsController < ApplicationController
 
     respond_to do |format|
       if @comment.save
-        format.html { redirect_to @comment, notice: "Comment was successfully created." }
+        format.html { redirect_to @comment.song, notice: "Comment was successfully created." }
         format.json { render :show, status: :created, location: @comment }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -38,7 +41,7 @@ class CommentsController < ApplicationController
   def update
     respond_to do |format|
       if @comment.update(comment_params)
-        format.html { redirect_to @comment, notice: "Comment was successfully updated.", status: :see_other }
+        format.html { redirect_to @comment.song, notice: "Comment was successfully updated.", status: :see_other }
         format.json { render :show, status: :ok, location: @comment }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -52,7 +55,7 @@ class CommentsController < ApplicationController
     @comment.destroy!
 
     respond_to do |format|
-      format.html { redirect_to comments_path, notice: "Comment was successfully destroyed.", status: :see_other }
+      format.html { redirect_to @comment.song, notice: "Comment was successfully destroyed.", status: :see_other }
       format.json { head :no_content }
     end
   end
@@ -61,6 +64,10 @@ class CommentsController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_comment
       @comment = Comment.find(params.expect(:id))
+    end
+
+    def set_song
+      @song = Song.find(params.expect(:song_id))
     end
 
     # Only allow a list of trusted parameters through.

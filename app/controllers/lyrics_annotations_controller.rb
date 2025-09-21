@@ -1,5 +1,6 @@
 class LyricsAnnotationsController < ApplicationController
   before_action :set_lyrics_annotation, only: %i[ show edit update destroy ]
+  before_action :set_lyrics_version, only: %i[ index new ]
 
   # GET /lyrics_annotations or /lyrics_annotations.json
   def index
@@ -52,7 +53,7 @@ class LyricsAnnotationsController < ApplicationController
     @lyrics_annotation.destroy!
 
     respond_to do |format|
-      format.html { redirect_to lyrics_annotations_path, notice: "Lyrics annotation was successfully destroyed.", status: :see_other }
+      format.html { redirect_to lyrics_version_lyrics_annotations_path(@lyrics_version), notice: "Lyrics annotation was successfully destroyed.", status: :see_other }
       format.json { head :no_content }
     end
   end
@@ -62,6 +63,10 @@ class LyricsAnnotationsController < ApplicationController
     def set_lyrics_annotation
       @lyrics_annotation = LyricsAnnotation.find(params.expect(:id))
     end
+
+    def set_lyrics_version
+      @lyrics_version = LyricsVersion.find(params.expect(:lyrics_version_id))
+  end
 
     # Only allow a list of trusted parameters through.
     def lyrics_annotation_params

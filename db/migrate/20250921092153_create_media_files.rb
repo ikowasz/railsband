@@ -3,7 +3,7 @@ class CreateMediaFiles < ActiveRecord::Migration[8.0]
     create_table :media_files, id: :uuid do |t|
       t.references :song, null: false, foreign_key: true, type: :uuid
       t.string :name
-      t.json :file
+      t.json :uploader
       t.string :checksum
 
       t.index [MediaFile.column[:song], :checksum], unique: true

@@ -1,9 +1,15 @@
 Rails.application.routes.draw do
-  resources :lyrics_annotations
-  resources :comments
-  resources :media_files
-  resources :lyrics_versions
-  resources :songs
+  resources :songs, only: [ :index, :show, :new, :create, :edit, :update, :destroy ]
+
+  resources :songs, only: [] do
+    resources :comments, only: [ :new ]
+    resources :media_files, only: [ :new ]
+    resources :lyrics_versions, only: [ :new ]
+  end
+
+  resources :comments, only: [ :show, :edit, :update, :create, :destroy ]
+  resources :media_files, only: [ :show, :edit, :update, :create, :destroy ]
+  resources :lyrics_versions, only: [ :show, :edit, :update, :create, :destroy ]
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
@@ -15,5 +21,5 @@ Rails.application.routes.draw do
   # get "service-worker" => "rails/pwa#service_worker", as: :pwa_service_worker
 
   # Defines the root path route ("/")
-  # root "posts#index"
+  root "songs#index"
 end

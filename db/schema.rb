@@ -53,7 +53,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_09_21_121203) do
   create_table "media_files", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "song_id", null: false
     t.string "name"
-    t.json "file"
+    t.json "uploader"
     t.string "checksum"
     t.datetime "created_at", default: -> { "now()" }, null: false
     t.datetime "updated_at", default: -> { "now()" }, null: false

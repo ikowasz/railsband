@@ -1,17 +1,15 @@
+<%= link_to "New song", new_song_path %>
+
 <p style="color: green"><%= notice %></p>
 
 <% content_for :title, "Songs" %>
 
 <h1>Songs</h1>
 
-<div id="songs">
-  <ul>
+<p>
   <% @songs.each do |song| %>
-    <li>
-      <%= link_to "#{song.title} [#{song.created_at}]", song %>
-    </li>
+    <div>
+      <%= link_to "#{song.title}", song %>
+    </div>
   <% end %>
-  </ul>
-</div>
-
-<%= link_to "New song", new_song_path %>
+</p>

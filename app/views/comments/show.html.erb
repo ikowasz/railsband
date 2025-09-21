@@ -1,10 +1,20 @@
+<p>
+  <%= link_to "Edit this comment", edit_comment_path(@comment) %>
+</p>
+
 <p style="color: green"><%= notice %></p>
+
+<p>
+  Song:
+  <%= link_to "#{@comment.song.title}", @comment.song %>
+</p>
 
 <%= render @comment %>
 
-<div>
-  <%= link_to "Edit this comment", edit_comment_path(@comment) %> |
-  <%= link_to "Back to comments", comments_path %>
+<br>
+<hr>
 
+<p>
   <%= button_to "Destroy this comment", @comment, method: :delete %>
-</div>
+</p>
+

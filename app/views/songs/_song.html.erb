@@ -1,66 +1,60 @@
 <div id="<%= dom_id song %>">
-  <p>
-    <strong>Title:</strong>
+  <h1>
     <%= song.title %>
-  </p>
+  </h1>
 
   <% if song.current_lyrics.present? %>
-  <p>
-    <strong>Lyrics:</strong>
-    <%= simple_format(song.current_lyrics.lyrics) %>
-  </p>
-  <% end %>
-
-  <% if song.current_lyrics_annotations.any? %>
     <p>
-      <strong>Lyrics annotations:</strong>
-      <ul>
-        <% song.current_lyrics_annotations.each do |annotation| %>
-        <li>
-          <%= link_to "#{annotation.id} [#{annotation.line_start}#{annotation.line_length > 1 ? " - " + annotation.line_start + annotation.line_length : ''}]", annotation %>
-        </li>
-        <% end %>
-      </ul>
+      <%= simple_format(song.current_lyrics.lyrics) %>
     </p>
   <% end %>
 
-  <% if song.media_files.any? %>
-  <p>
-    <strong>Media</strong>
-    <ul>
-        <% song.media_files.each do |media_file| %>
-        <li>
-          <%= link_to "#{media_file.name}", media_file %>
-        </li>
-        <% end %>
-    </ul>
-  </p>
-  <% end %>
+  <br>
+  <br>
 
   <% if song.comments.any? %>
-  <p>
-    <strong>Comments</strong>
-    <ul>
+    <br>
+
+    <div>
+      <h2>Comments:</h2>
       <% song.comments.each do |comment| %>
-      <li>
-        <%= link_to "#{comment.id} - #{comment.created_at}", comment %>
-      </li>
+        <%= render comment %>
       <% end %>
-    </ul>
-  </p>
+    </div>
   <% end %>
 
+
   <% if song.lyrics_history.count > 1 %>
-  <p>
-    <strong>History</strong>
-    <ul>
-      <% song.lyrics_history.each do |lyrics_version|  %>
-      <li>
-        <%= link_to "#{lyrics_version.id} - #{lyrics_version.updated_at}", lyrics_version %>
-      </li>
+    <br>
+
+    <div>
+      <h2>Change history:</h2>
+      <%= render "songs/lyrics_version_listing", lyrics_versions: song.lyrics_history %>
+    </div>
+  <% end %>
+
+
+  <% if song.lyrics_proposals.any? %>
+    <br>
+
+    <div>
+      <h2>Change requests:</h2>
+      <%= render "songs/lyrics_version_listing", lyrics_versions: song.lyrics_proposals %>
+    </div>
+  <% end %>
+
+
+  <% if song.media_files.any? %>
+    <br>
+
+    <div>
+      <h2>Files:</h2>
+      <% song.media_files.each do |media_file| %>
+        <div>
+          <%= link_to "#{media_file.name}", media_file %>
+        </div>
       <% end %>
-    </ul>
-  </p>
+    </div>
   <% end %>
 
 </div>

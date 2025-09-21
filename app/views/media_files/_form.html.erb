@@ -11,24 +11,23 @@
     </div>
   <% end %>
 
-  <div>
-    <%= form.label :song_id, style: "display: block" %>
-    <%= form.text_field :song_id %>
-  </div>
+  <p>
+    Target song: <%= link_to "#{song.title}", song %>
+    <%= form.hidden_field :song_id %>
+  </p>
 
-  <div>
+  <p>
     <%= form.label :name, style: "display: block" %>
     <%= form.text_field :name %>
-  </div>
+  </p>
 
-  <div>
-    <%= form.label :file, style: "display: block" %>
-    <%= form.file_field :file %>
+  <p>
+    <%= form.label :uploader, style: "display: block" %>
+    <%= form.file_field :uploader %>
     <%= form.hidden_field :file_cache %>
-  </div>
+  </p>
 
-
-  <div>
+  <p>
     <%= form.submit %>
-  </div>
+  </p>
 <% end %>

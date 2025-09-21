@@ -1,10 +1,49 @@
+<p>
+  <% if @lyrics_version.previous_version.present? %>
+    <%= link_to "< Previous version", @lyrics_version.previous_version %> |
+  <% end %>
+
+  <% if @lyrics_version.is_proposal %>
+    <%= link_to "Edit this lyrics version", edit_lyrics_version_path(@lyrics_version) %>
+  <% end %>
+
+  <% if @lyrics_version.next_version.present? %>
+    <%= link_to "Next version >", @lyrics_version.next_version %>
+  <% end %>
+</p>
+
 <p style="color: green"><%= notice %></p>
+
+<h1>
+  <%= link_to "#{@lyrics_version.song.title}", @lyrics_version.song %>
+</h1>
 
 <%= render @lyrics_version %>
 
-<div>
-  <%= link_to "Edit this lyrics version", edit_lyrics_version_path(@lyrics_version) %> |
-  <%= link_to "Back to lyrics versions", lyrics_versions_path %>
+<br>
+<hr>
 
+<p>
+  Last change:
+  <%= @lyrics_version.description %>
+  <% if @lyrics_version.is_proposal %>
+    (proposition)
+  <% end %>
+</p>
+
+
+<% if @lyrics_version.proposals.any? %>
+  <p>
+    Change requests:
+    <% @lyrics_version.proposals.each do |proposal| %>
+    <div>
+      <%= link_to "#{proposal.description}", proposal %>
+    </div>
+  <% end %>
+  </p>
+<% end %>
+
+<% if @lyrics_version.is_proposal %>
   <%= button_to "Destroy this lyrics version", @lyrics_version, method: :delete %>
-</div>
+<% end %>
+
