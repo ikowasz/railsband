@@ -1,0 +1,16 @@
+<p style="color: green"><%= notice %></p>
+
+<% content_for :title, "Media files" %>
+
+<h1>Media files</h1>
+
+<div id="media_files">
+  <% @media_files.each do |media_file| %>
+    <%= render media_file %>
+    <p>
+      <%= link_to "Show this media file", media_file %>
+    </p>
+  <% end %>
+</div>
+
+<%= link_to "New media file", new_media_file_path %>
