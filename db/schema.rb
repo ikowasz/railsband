@@ -42,10 +42,11 @@ ActiveRecord::Schema[8.0].define(version: 2025_09_21_121203) do
     t.uuid "previous_version_id"
     t.boolean "is_proposal", default: true
     t.text "lyrics", default: ""
+    t.string "description", default: -> { "concat('changes from', to_char(now(), 'yyyy-mm-dd'::text))" }
     t.datetime "created_at", default: -> { "now()" }, null: false
     t.datetime "updated_at", default: -> { "now()" }, null: false
     t.index ["previous_version_id"], name: "index_lyrics_versions_on_previous_version_id"
-    t.index ["song_id", "previous_version_id"], name: "index_lyrics_versions_on_song_and_previous_not_proposal", unique: true, where: "(is_proposal = false)"
+    t.index ["song_id", "previous_version_id"], name: "index_lyrics_versions_on_song_and_previous_not_proposal", unique: true, where: "(is_proposal = false)", nulls_not_distinct: true
     t.index ["song_id"], name: "index_lyrics_versions_on_song_id"
   end
 
@@ -53,8 +54,10 @@ ActiveRecord::Schema[8.0].define(version: 2025_09_21_121203) do
     t.uuid "song_id", null: false
     t.string "name"
     t.json "file"
+    t.string "checksum"
     t.datetime "created_at", default: -> { "now()" }, null: false
     t.datetime "updated_at", default: -> { "now()" }, null: false
+    t.index ["song_id", "checksum"], name: "index_media_files_on_song_id_and_checksum", unique: true
     t.index ["song_id"], name: "index_media_files_on_song_id"
   end
 
