@@ -40,11 +40,12 @@ ActiveRecord::Schema[8.0].define(version: 2025_09_21_121203) do
   create_table "lyrics_versions", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "song_id", null: false
     t.uuid "previous_version_id"
-    t.boolean "is_proposal", default: false
+    t.boolean "is_proposal", default: true
     t.text "lyrics", default: ""
     t.datetime "created_at", default: -> { "now()" }, null: false
     t.datetime "updated_at", default: -> { "now()" }, null: false
     t.index ["previous_version_id"], name: "index_lyrics_versions_on_previous_version_id"
+    t.index ["song_id", "previous_version_id"], name: "index_lyrics_versions_on_song_and_previous_not_proposal", unique: true, where: "(is_proposal = false)"
     t.index ["song_id"], name: "index_lyrics_versions_on_song_id"
   end
 

@@ -2,6 +2,7 @@ class LyricsAnnotation < ApplicationRecord
   belongs_to :lyrics_version
   belongs_to :media_file, optional: true
   belongs_to :comment, optional: true
+  has_one :song, through: :lyrics_version
 
   private
     def any_content_presence

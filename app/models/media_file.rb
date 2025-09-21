@@ -1,6 +1,8 @@
 class MediaFile < ApplicationRecord
   belongs_to :song
   mount_uploader :file, MediaUploader
+  has_many :lyrics_annotation
+  has_many :lyrics_version, through: :lyrics_annotation
 
   validates :file, presence: true
   validate :matching_extension, on: :create, if: -> { file.present? }
