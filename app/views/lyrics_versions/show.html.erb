@@ -1,0 +1,10 @@
+<p style="color: green"><%= notice %></p>
+
+<%= render @lyrics_version %>
+
+<div>
+  <%= link_to "Edit this lyrics version", edit_lyrics_version_path(@lyrics_version) %> |
+  <%= link_to "Back to lyrics versions", lyrics_versions_path %>
+
+  <%= button_to "Destroy this lyrics version", @lyrics_version, method: :delete %>
+</div>

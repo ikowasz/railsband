@@ -1,0 +1,12 @@
+<% content_for :title, "Editing lyrics version" %>
+
+<h1>Editing lyrics version</h1>
+
+<%= render "form", lyrics_version: @lyrics_version %>
+
+<br>
+
+<div>
+  <%= link_to "Show this lyrics version", @lyrics_version %> |
+  <%= link_to "Back to lyrics versions", lyrics_versions_path %>
+</div>

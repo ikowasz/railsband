@@ -1,0 +1,13 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  song: one
+  previous_version: one
+  is_proposal: false
+  lyrics: MyText
+
+two:
+  song: two
+  previous_version: two
+  is_proposal: false
+  lyrics: MyText

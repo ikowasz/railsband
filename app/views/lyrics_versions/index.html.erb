@@ -1,0 +1,16 @@
+<p style="color: green"><%= notice %></p>
+
+<% content_for :title, "Lyrics versions" %>
+
+<h1>Lyrics versions</h1>
+
+<div id="lyrics_versions">
+  <% @lyrics_versions.each do |lyrics_version| %>
+    <%= render lyrics_version %>
+    <p>
+      <%= link_to "Show this lyrics version", lyrics_version %>
+    </p>
+  <% end %>
+</div>
+
+<%= link_to "New lyrics version", new_lyrics_version_path %>
