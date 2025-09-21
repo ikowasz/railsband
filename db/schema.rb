@@ -20,8 +20,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_09_21_092153) do
     t.uuid "previous_version_id"
     t.boolean "is_proposal", default: false
     t.text "lyrics", default: ""
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", default: -> { "now()" }, null: false
+    t.datetime "updated_at", default: -> { "now()" }, null: false
     t.index ["previous_version_id"], name: "index_lyrics_versions_on_previous_version_id"
     t.index ["song_id"], name: "index_lyrics_versions_on_song_id"
   end
@@ -30,15 +30,15 @@ ActiveRecord::Schema[8.0].define(version: 2025_09_21_092153) do
     t.uuid "song_id", null: false
     t.string "name"
     t.json "file"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", default: -> { "now()" }, null: false
+    t.datetime "updated_at", default: -> { "now()" }, null: false
     t.index ["song_id"], name: "index_media_files_on_song_id"
   end
 
   create_table "songs", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "title"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", default: -> { "now()" }, null: false
+    t.datetime "updated_at", default: -> { "now()" }, null: false
   end
 
   add_foreign_key "lyrics_versions", "lyrics_versions", column: "previous_version_id"
