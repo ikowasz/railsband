@@ -4,10 +4,12 @@
     <%= song.title %>
   </p>
 
+  <% if song.current_lyrics.present? %>
   <p>
     <strong>Lyrics:</strong>
     <%= simple_format(song.current_lyrics.lyrics) %>
   </p>
+  <% end %>
 
   <% if song.current_lyrics_annotations.any? %>
     <p>

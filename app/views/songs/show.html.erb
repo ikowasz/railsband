@@ -1,10 +1,30 @@
 <p style="color: green"><%= notice %></p>
 
-<%= render @song %>
-
 <div>
   <%= link_to "Edit this song", edit_song_path(@song) %> |
   <%= link_to "Back to songs", songs_path %>
+</div>
 
+<%= render @song %>
+
+<ul>
+  <li>
+    <%= link_to "Add comment", new_comment_path %>
+  </li>
+
+  <li>
+    <%= link_to "Add media files", new_media_file_path %>
+  </li>
+
+  <li>
+    <%= link_to "Add annotation", new_lyrics_annotation_path %>
+  </li>
+
+  <li>
+    <%= link_to "Add new lyrics", new_lyrics_version_path %>
+  </li>
+</ul>
+
+<div>
   <%= button_to "Destroy this song", @song, method: :delete %>
 </div>

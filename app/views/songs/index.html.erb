@@ -5,12 +5,13 @@
 <h1>Songs</h1>
 
 <div id="songs">
+  <ul>
   <% @songs.each do |song| %>
-    <%= render song %>
-    <p>
-      <%= link_to "Show this song", song %>
-    </p>
+    <li>
+      <%= link_to "#{song.title} [#{song.created_at}]", song %>
+    </li>
   <% end %>
+  </ul>
 </div>
 
 <%= link_to "New song", new_song_path %>
