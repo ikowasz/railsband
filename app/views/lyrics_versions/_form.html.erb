@@ -1,0 +1,37 @@
+<%= form_with(model: lyrics_version) do |form| %>
+  <% if lyrics_version.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(lyrics_version.errors.count, "error") %> prohibited this lyrics_version from being saved:</h2>
+
+      <ul>
+        <% lyrics_version.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.label :song_id, style: "display: block" %>
+    <%= form.text_field :song_id %>
+  </div>
+
+  <div>
+    <%= form.label :previous_version_id, style: "display: block" %>
+    <%= form.text_field :previous_version_id %>
+  </div>
+
+  <div>
+    <%= form.label :is_proposal, style: "display: block" %>
+    <%= form.checkbox :is_proposal %>
+  </div>
+
+  <div>
+    <%= form.label :lyrics, style: "display: block" %>
+    <%= form.textarea :lyrics %>
+  </div>
+
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %>
