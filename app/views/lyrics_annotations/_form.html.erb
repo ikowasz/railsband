@@ -12,8 +12,9 @@
   <% end %>
 
   <div>
-    <%= form.label :lyrics_version_id, style: "display: block" %>
-    <%= form.text_field :lyrics_version_id %>
+    <strong>Lyrics version:</strong>
+    <%= "#{lyrics_version.description} (#{lyrics_version.created_at})" %>
+    <%= form.hidden_field :lyrics_version_id %>
   </div>
 
   <div>

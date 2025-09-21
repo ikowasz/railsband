@@ -1,5 +1,6 @@
 class LyricsVersionsController < ApplicationController
   before_action :set_lyrics_version, only: %i[ show edit update destroy ]
+  before_action :set_song, only: %i[ index new ]
 
   # GET /lyrics_versions or /lyrics_versions.json
   def index
@@ -12,7 +13,12 @@ class LyricsVersionsController < ApplicationController
 
   # GET /lyrics_versions/new
   def new
-    @lyrics_version = LyricsVersion.new
+    @lyrics_version = LyricsVersion.new(
+      song: @song,
+      previous_version_id: @song.current_lyrics.try(:id),
+      is_proposal: @song.current_lyrics.present? ? true : false,
+      lyrics: @song.current_lyrics.try(:lyrics),
+    )
   end
 
   # GET /lyrics_versions/1/edit
@@ -25,7 +31,7 @@ class LyricsVersionsController < ApplicationController
 
     respond_to do |format|
       if @lyrics_version.save
-        format.html { redirect_to @lyrics_version, notice: "Lyrics version was successfully created." }
+        format.html { redirect_to @lyrics_version.song, notice: "Lyrics version was successfully created." }
         format.json { render :show, status: :created, location: @lyrics_version }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -38,7 +44,7 @@ class LyricsVersionsController < ApplicationController
   def update
     respond_to do |format|
       if @lyrics_version.update(lyrics_version_params)
-        format.html { redirect_to @lyrics_version, notice: "Lyrics version was successfully updated.", status: :see_other }
+        format.html { redirect_to @lyrics_version.song, notice: "Lyrics version was successfully updated.", status: :see_other }
         format.json { render :show, status: :ok, location: @lyrics_version }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -52,7 +58,7 @@ class LyricsVersionsController < ApplicationController
     @lyrics_version.destroy!
 
     respond_to do |format|
-      format.html { redirect_to lyrics_versions_path, notice: "Lyrics version was successfully destroyed.", status: :see_other }
+      format.html { redirect_to song_path(@lyrics_version.song), notice: "Lyrics version was successfully destroyed.", status: :see_other }
       format.json { head :no_content }
     end
   end
@@ -61,6 +67,10 @@ class LyricsVersionsController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_lyrics_version
       @lyrics_version = LyricsVersion.find(params.expect(:id))
+    end
+
+    def set_song
+      @song = Song.find(params.expect(:song_id))
     end
 
     # Only allow a list of trusted parameters through.

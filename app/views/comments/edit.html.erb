@@ -1,12 +1,12 @@
+<div>
+  <%= link_to "Show this comment", @comment %>
+</div>
+
 <% content_for :title, "Editing comment" %>
 
-<h1>Editing comment</h1>
+<p>
+  You're editing comment on:
+  <%= link_to "#{@comment.song.title}", @comment.song %>
+</p>
 
 <%= render "form", comment: @comment %>
-
-<br>
-
-<div>
-  <%= link_to "Show this comment", @comment %> |
-  <%= link_to "Back to comments", comments_path %>
-</div>

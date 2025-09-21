@@ -2,10 +2,10 @@
 
 <h1>New lyrics annotation</h1>
 
-<%= render "form", lyrics_annotation: @lyrics_annotation %>
+<%= render "form", lyrics_version: @lyrics_version, lyrics_annotation: @lyrics_annotation %>
 
 <br>
 
 <div>
-  <%= link_to "Back to lyrics annotations", lyrics_annotations_path %>
+  <%= link_to "Go back to the lyrics", lyrics_version_path(@lyrics_version)  %>
 </div>

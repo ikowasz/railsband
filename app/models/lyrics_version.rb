@@ -1,8 +1,9 @@
 class LyricsVersion < ApplicationRecord
   belongs_to :song
   belongs_to :previous_version, optional: true, class_name: "LyricsVersion"
-  has_many :proposals, -> { where(is_proposal: 1) }, class_name: "LyricsVersion", dependent: :restrict_with_error
-  has_one :next_version, -> { where(is_proposal: 0) }, class_name: "LyricsVersion", dependent: :restrict_with_error
+  has_many :next_versions, ->(lyrics_version) { where(previous_version_id: lyrics_version.id) }, class_name: "LyricsVersion", foreign_key: "previous_version_id", dependent: :restrict_with_error
+  has_many :proposals, ->(lyrics_version) { lyrics_version.next_versions.where(is_proposal: 1) }, class_name: "LyricsVersion", foreign_key: "previous_version_id"
+  has_one :next_version, ->(lyrics_version) { lyrics_version.next_versions.where(is_proposal: 0) }, class_name: "LyricsVersion", foreign_key: "previous_version_id"
   has_many :lyrics_annotations
   has_many :comments, through: :lyrics_annotations
   has_many :media_files, through: :lyrics_annotations

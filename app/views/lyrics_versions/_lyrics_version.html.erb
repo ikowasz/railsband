@@ -1,24 +1,5 @@
 <div id="<%= dom_id lyrics_version %>">
   <p>
-    <strong>Song:</strong>
-    <%= link_to lyrics_version.song_id, lyrics_version.song %>
-  </p>
-
-  <p>
-    <strong>Previous version:</strong>
-    <% if lyrics_version.previous_version_id %>
-      <%= link_to lyrics_version.previous_version_id, lyrics_version.previous_version %>
-    <% end %>
-  </p>
-
-  <p>
-    <strong>Is proposal:</strong>
-    <%= lyrics_version.is_proposal ? 'yes' : 'no' %>
-  </p>
-
-  <p>
-    <strong>Lyrics:</strong>
     <%= simple_format(lyrics_version.lyrics) %>
   </p>
-
 </div>

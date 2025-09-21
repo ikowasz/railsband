@@ -1,11 +1,8 @@
 <% content_for :title, "New comment" %>
 
-<h1>New comment</h1>
+<p>
+  You're commenting:
+  <%= link_to "#{@comment.song.title}", @comment.song %>
+</p>
 
 <%= render "form", comment: @comment %>
-
-<br>
-
-<div>
-  <%= link_to "Back to comments", comments_path %>
-</div>
