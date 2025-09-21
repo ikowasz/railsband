@@ -1,0 +1,11 @@
+<% content_for :title, "New lyrics annotation" %>
+
+<h1>New lyrics annotation</h1>
+
+<%= render "form", lyrics_annotation: @lyrics_annotation %>
+
+<br>
+
+<div>
+  <%= link_to "Back to lyrics annotations", lyrics_annotations_path %>
+</div>

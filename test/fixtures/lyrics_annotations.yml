@@ -1,0 +1,15 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  lyrics_version: one
+  media_file: one
+  comment: one
+  line_start: 1
+  line_length: 1
+
+two:
+  lyrics_version: two
+  media_file: two
+  comment: two
+  line_start: 1
+  line_length: 1

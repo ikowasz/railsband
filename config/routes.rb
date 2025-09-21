@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :lyrics_annotations
   resources :comments
   resources :media_files
   resources :lyrics_versions

@@ -1,0 +1,10 @@
+<p style="color: green"><%= notice %></p>
+
+<%= render @lyrics_annotation %>
+
+<div>
+  <%= link_to "Edit this lyrics annotation", edit_lyrics_annotation_path(@lyrics_annotation) %> |
+  <%= link_to "Back to lyrics annotations", lyrics_annotations_path %>
+
+  <%= button_to "Destroy this lyrics annotation", @lyrics_annotation, method: :delete %>
+</div>
