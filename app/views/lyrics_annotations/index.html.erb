@@ -1,0 +1,16 @@
+<p style="color: green"><%= notice %></p>
+
+<% content_for :title, "Lyrics annotations" %>
+
+<h1>Lyrics annotations</h1>
+
+<div id="lyrics_annotations">
+  <% @lyrics_annotations.each do |lyrics_annotation| %>
+    <%= render lyrics_annotation %>
+    <p>
+      <%= link_to "Show this lyrics annotation", lyrics_annotation %>
+    </p>
+  <% end %>
+</div>
+
+<%= link_to "New lyrics annotation", new_lyrics_annotation_path %>
