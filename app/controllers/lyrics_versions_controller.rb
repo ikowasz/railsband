@@ -1,5 +1,5 @@
 class LyricsVersionsController < ApplicationController
-  before_action :set_lyrics_version, only: %i[ show edit update destroy ]
+  before_action :set_lyrics_version, only: %i[ show edit update destroy accept ]
   before_action :set_song, only: %i[ index new ]
 
   # GET /lyrics_versions or /lyrics_versions.json
@@ -60,6 +60,19 @@ class LyricsVersionsController < ApplicationController
     respond_to do |format|
       format.html { redirect_to song_path(@lyrics_version.song), notice: "Lyrics version was successfully destroyed.", status: :see_other }
       format.json { head :no_content }
+    end
+  end
+
+  def accept
+    respond_to do |format|
+      if @lyrics_version.update({ is_proposal: false })
+        format.html { redirect_to @lyrics_version.song, notice: "Lyrics version was successfully accepted.", status: :see_other }
+        format.json { render :show, status: :ok, location: @lyrics_version }
+      else
+        @lyrics_version.is_proposal = true
+        format.html { render :show, status: :unprocessable_entity }
+        format.json { render json: @lyrics_version.errors, status: :unprocessable_entity }
+      end
     end
   end
 
