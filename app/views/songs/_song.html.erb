@@ -4,4 +4,61 @@
     <%= song.title %>
   </p>
 
+  <p>
+    <strong>Lyrics:</strong>
+    <%= simple_format(song.current_lyrics.lyrics) %>
+  </p>
+
+  <% if song.current_lyrics_annotations.any? %>
+    <p>
+      <strong>Lyrics annotations:</strong>
+      <ul>
+        <% song.current_lyrics_annotations.each do |annotation| %>
+        <li>
+          <%= link_to "#{annotation.id} [#{annotation.line_start}#{annotation.line_length > 1 ? " - " + annotation.line_start + annotation.line_length : ''}]", annotation %>
+        </li>
+        <% end %>
+      </ul>
+    </p>
+  <% end %>
+
+  <% if song.media_files.any? %>
+  <p>
+    <strong>Media</strong>
+    <ul>
+        <% song.media_files.each do |media_file| %>
+        <li>
+          <%= link_to "#{media_file.name}", media_file %>
+        </li>
+        <% end %>
+    </ul>
+  </p>
+  <% end %>
+
+  <% if song.comments.any? %>
+  <p>
+    <strong>Comments</strong>
+    <ul>
+      <% song.comments.each do |comment| %>
+      <li>
+        <%= link_to "#{comment.id} - #{comment.created_at}", comment %>
+      </li>
+      <% end %>
+    </ul>
+  </p>
+  <% end %>
+
+  <% if song.lyrics_history.count > 1 %>
+  <p>
+    <strong>History</strong>
+    <ul>
+      <% song.lyrics_history.each do |lyrics_version|  %>
+      <li>
+        <%= link_to "#{lyrics_version.id} - #{lyrics_version.updated_at}", lyrics_version %>
+      </li>
+      <% end %>
+    </ul>
+  </p>
+  <% end %>
+
 </div>
