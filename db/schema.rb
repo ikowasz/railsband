@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_09_21_082903) do
+ActiveRecord::Schema[8.0].define(version: 2025_09_21_092153) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
   enable_extension "pgcrypto"
@@ -26,6 +26,15 @@ ActiveRecord::Schema[8.0].define(version: 2025_09_21_082903) do
     t.index ["song_id"], name: "index_lyrics_versions_on_song_id"
   end
 
+  create_table "media_files", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "song_id", null: false
+    t.string "name"
+    t.json "file"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["song_id"], name: "index_media_files_on_song_id"
+  end
+
   create_table "songs", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "title"
     t.datetime "created_at", null: false
@@ -34,4 +43,5 @@ ActiveRecord::Schema[8.0].define(version: 2025_09_21_082903) do
 
   add_foreign_key "lyrics_versions", "lyrics_versions", column: "previous_version_id"
   add_foreign_key "lyrics_versions", "songs"
+  add_foreign_key "media_files", "songs"
 end

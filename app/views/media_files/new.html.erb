@@ -1,0 +1,11 @@
+<% content_for :title, "New media file" %>
+
+<h1>New media file</h1>
+
+<%= render "form", media_file: @media_file %>
+
+<br>
+
+<div>
+  <%= link_to "Back to media files", media_files_path %>
+</div>
