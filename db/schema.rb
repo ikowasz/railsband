@@ -42,7 +42,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_09_21_121203) do
     t.uuid "previous_version_id"
     t.boolean "is_proposal", default: true
     t.text "lyrics", default: ""
-    t.string "description", default: -> { "concat('changes from', to_char(now(), 'yyyy-mm-dd'::text))" }
+    t.string "description", default: -> { "concat('changes from ', to_char(now(), 'yyyy-mm-dd'::text))" }
     t.datetime "created_at", default: -> { "now()" }, null: false
     t.datetime "updated_at", default: -> { "now()" }, null: false
     t.index ["previous_version_id"], name: "index_lyrics_versions_on_previous_version_id"
