@@ -1,10 +1,13 @@
-<div>
-  <%= link_to "Show this song", @song %> |
-  <%= link_to "Back to songs", songs_path %>
-</div>
+<% content_for :second_navbar do %>
+  <ul>
+    <li>
+      <%= link_to "Show this song", @song %>
+    </li>
+  </ul>
+<% end %>
 
 <% content_for :title, "Editing song" %>
 
-<h1>Editing song</h1>
+<% content_for :page_title, "Editing song" %>
 
 <%= render "form", song: @song %>

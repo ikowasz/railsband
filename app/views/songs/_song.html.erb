@@ -1,60 +1,45 @@
 <div id="<%= dom_id song %>">
-  <h1>
-    <%= song.title %>
-  </h1>
-
   <% if song.current_lyrics.present? %>
     <p>
       <%= simple_format(song.current_lyrics.lyrics) %>
     </p>
   <% end %>
 
-  <br>
-  <br>
-
   <% if song.comments.any? %>
-    <br>
-
-    <div>
+    <section>
       <h2>Comments:</h2>
       <% song.comments.each do |comment| %>
         <%= render comment %>
       <% end %>
-    </div>
+    </section>
   <% end %>
 
 
   <% if song.lyrics_history.count > 1 %>
-    <br>
-
-    <div>
+    <section>
       <h2>Change history:</h2>
       <%= render "songs/lyrics_version_listing", lyrics_versions: song.lyrics_history %>
-    </div>
+    </section>
   <% end %>
 
 
   <% if song.lyrics_proposals.any? %>
-    <br>
-
-    <div>
+    <section>
       <h2>Change requests:</h2>
       <%= render "songs/lyrics_version_listing", lyrics_versions: song.lyrics_proposals %>
-    </div>
+    </section>
   <% end %>
 
 
   <% if song.media_files.any? %>
-    <br>
-
-    <div>
+    <section>
       <h2>Files:</h2>
       <% song.media_files.each do |media_file| %>
         <div>
           <%= link_to "#{media_file.name}", media_file %>
         </div>
       <% end %>
-    </div>
+    </section>
   <% end %>
 
 </div>

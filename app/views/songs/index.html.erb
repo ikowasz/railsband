@@ -1,15 +1,22 @@
-<%= link_to "New song", new_song_path %>
-
-<p style="color: green"><%= notice %></p>
+<%= content_for :navbar do %>
+  <ul>
+    <li>
+      <h1>Songs</h1>
+    </li>
+  </ul>
+  <ul>
+    <li>
+      <%= link_to "New song", new_song_path %>
+    </li>
+  </ul>
+<% end %>
 
 <% content_for :title, "Songs" %>
 
-<h1>Songs</h1>
-
-<p>
+<div>
   <% @songs.each do |song| %>
     <div>
       <%= link_to "#{song.title}", song %>
     </div>
   <% end %>
-</p>
+</div>

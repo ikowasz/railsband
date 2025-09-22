@@ -1,19 +1,16 @@
-<p>
-  <%= link_to "Edit the file", edit_media_file_path(@media_file) %>
-</p>
+<%= content_for :title, "File #{@media_file.name}" %>
+<%= content_for :nav_links do %>
+  <li>
+    <%= link_to "Edit the file", edit_media_file_path(@media_file) %>
+  </li>
+  <li>
+    <%= button_to "Destroy this media file", @media_file, method: :delete %>
+  </li>
+<% end %>
 
-<p style="color: green"><%= notice %></p>
-
-<p>
+<section>
   Related song:
   <%= link_to "#{@media_file.song.title}", @media_file.song %>
-</p>
-
+</section>
 
 <%= render @media_file %>
-
-<hr>
-
-<p>
-  <%= button_to "Destroy this media file", @media_file, method: :delete %>
-</p>

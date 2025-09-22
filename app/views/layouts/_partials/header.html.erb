@@ -1,0 +1,29 @@
+<nav>
+  <% if content_for? :navbar %>
+    <%= yield :navbar %>
+  <% else %>
+    <ul>
+      <li>
+        <h1>
+          <% if content_for? :page_title %>
+            <%= yield :page_title %>
+          <% elsif content_for? :title %>
+            <%= yield :title %>
+          <% end %>
+        </h1>
+      </li>
+    </ul>
+    <ul>
+      <li>
+        <%= link_to "Songs", songs_path %>
+      </li>
+      <%= yield :nav_links %>
+    </ul>
+  <% end %>
+</nav>
+
+<% if content_for :second_navbar %>
+  <nav>
+    <%= yield :second_navbar %>
+  </nav>
+<% end %>

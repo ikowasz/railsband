@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title><%= content_for(:title) || "Railsband" %></title>
+    <title><%= yield(:title) || "Railsband" %></title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="mobile-web-app-capable" content="yes">
@@ -24,8 +24,10 @@
   </head>
 
   <body>
-    <main class="container">
+    <% if content_for? :body_content %>
+      <%= yield :body_content %>
+    <% else %>
       <%= yield %>
-    </main>
+    <% end %>
   </body>
 </html>

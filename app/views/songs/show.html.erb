@@ -1,19 +1,35 @@
-<p>
-  <%= link_to "Back to songs", songs_path %> |
-  <%= link_to "Add new lyrics", new_song_lyrics_version_path(@song) %> |
-  <%= link_to "Add comment", new_song_comment_path(@song) %> |
-  <%= link_to "Add media files", new_song_media_file_path(@song) %> |
-  <%= link_to "Edit this song", edit_song_path(@song) %>
-</p>
+<% content_for :second_navbar do %>
+  <ul>
+    <li>
+      <%= link_to "New song", new_song_path %>
+    </li>
+    <li>
+      <%= link_to "Back to songs", songs_path %>
+    </li>
+    <li>
+      <%= link_to "Add new lyrics", new_song_lyrics_version_path(@song) %>
+    </li>
+    <li>
+      <%= link_to "Add comment", new_song_comment_path(@song) %>
+    </li>
+    <li>
+      <%= link_to "Add media files", new_song_media_file_path(@song) %>
+    </li>
+    <li>
+      <%= link_to "Edit this song", edit_song_path(@song) %>
+    </li>
+  </ul>
+<% end %>
 
-<p style="color: green"><%= notice %></p>
+<% content_for :page_title, "Song '#{@song.title}'" %>
+<% content_for :title, "Song '#{@song.title}'" %>
 
 <%= render @song %>
 
 <% if @song.lyrics_versions.empty? and @song.media_files.empty? and @song.comments.empty? %>
-  <hr>
-
-  <p>
-    <%= button_to "Destroy this song", @song, method: :delete %>
-  </p>
+  <% content_for :nav_links do %>
+    <li>
+      <%= button_to "Destroy this song", @song, method: :delete %>
+    </li>
+  <% end %>
 <% end %>
