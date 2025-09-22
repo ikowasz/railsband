@@ -11,6 +11,9 @@ Rails.application.routes.draw do
   resources :media_files, only: [ :show, :edit, :update, :create, :destroy ]
   resources :lyrics_versions, only: [ :show, :edit, :update, :create, :destroy ] do
     post "accept" => "lyrics_versions#accept"
+    get "conflict" => "lyrics_versions#conflict"
+    post "diff" => "lyrics_versions#diff"
+    post "resolve" => "lyrics_versions#resolve"
   end
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
