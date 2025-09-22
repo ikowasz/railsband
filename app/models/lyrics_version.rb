@@ -8,11 +8,8 @@ class LyricsVersion < ApplicationRecord
   has_many :comments, through: :lyrics_annotations
   has_many :media_files, through: :lyrics_annotations
 
-  attr_readonly :song_id
-  attr_readonly :previous_version_id
-  attr_readonly :lyrics
-
   validate :was_changed_since_last_refresh, on: [:update, :create]
+  before_update :guard_readonly_attributes
 
   private
     def was_changed_since_last_refresh
@@ -26,4 +23,20 @@ class LyricsVersion < ApplicationRecord
       query = query.where("id != ?", id) if id.present?
       query.any?
     end
+
+  def guard_readonly_attributes
+    if !is_proposal and !just_accepted? and readonly_attributes_changed?
+      errors.add(:base, 'after accept lyrics are immutable')
+      throw :abort
+    end
+  end
+
+  private
+  def just_accepted?
+    changes[:is_proposal].present? && changes[:is_proposal][0] == true
+  end
+
+  def readonly_attributes_changed?
+    (changed_attributes & %w[song_id, previous_version_id, lyrics]).any?
+  end
 end
