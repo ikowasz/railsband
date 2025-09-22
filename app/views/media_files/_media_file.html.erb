@@ -1,10 +1,8 @@
-<div id="<%= dom_id media_file %>">
-  <p>
-    <a href="<%= media_file.uploader.url %>">
-      <%= media_file.name %>
-      <% unless media_file.name.eql? media_file.uploader.file.filename %>
-        (<%= media_file.uploader.file.filename %>)
-      <% end %>
-    </a>
-  </p>
-</div>
+<section id="<%= dom_id media_file %>">
+  <a href="<%= media_file.uploader.url %>">
+    <%= media_file.name %>
+    <% unless media_file.name.eql? media_file.uploader.file.filename %>
+      (<%= media_file.uploader.file.filename %>)
+    <% end %>
+  </a>
+</section>

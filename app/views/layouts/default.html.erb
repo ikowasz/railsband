@@ -1,0 +1,29 @@
+<% content_for :body_content do %>
+  <header class="container">
+    <% if content_for? :header %>
+      <%= yield :header %>
+    <% else %>
+      <%= render template: "layouts/_partials/header" %>
+    <% end %>
+  </header>
+
+  <main class="container">
+    <%= render template: "layouts/_partials/messages" %>
+
+    <% if content_for? :main %>
+      <%= yield :main %>
+    <% else %>
+      <%= yield %>
+    <% end %>
+  </main>
+
+  <footer>
+    <% if content_for? :footer %>
+      <%= yield :footer %>
+    <% else %>
+      <%= render template: "layouts/_partials/footer" %>
+    <% end %>
+  </footer>
+<% end %>
+
+<%= render template: 'layouts/application' %>

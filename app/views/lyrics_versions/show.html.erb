@@ -1,50 +1,53 @@
-<p>
-  <% if @lyrics_version.previous_version.present? %>
-    <%= link_to "< Previous version", @lyrics_version.previous_version %>
-  <% end %>
+<% content_for :second_navbar do %>
+  <ul>
+      <% if @lyrics_version.previous_version.present? %>
+        <li>
+          <%= link_to "< Previous version", @lyrics_version.previous_version %>
+        </li>
+      <% end %>
 
-  <% if @lyrics_version.is_proposal %>
-    | <%= link_to "Edit this lyrics version", edit_lyrics_version_path(@lyrics_version) %>
-  <% end %>
+      <% if @lyrics_version.is_proposal %>
+        <li>
+          <%= link_to "Edit this lyrics version", edit_lyrics_version_path(@lyrics_version) %>
+        </li>
+      <% end %>
 
-  <% if @lyrics_version.next_version.present? %>
-    | <%= link_to "Next version >", @lyrics_version.next_version %>
-  <% end %>
-</p>
+      <% if @lyrics_version.next_version.present? %>
+        <li>
+          <%= link_to "Next version >", @lyrics_version.next_version %>
+        </li>
+      <% end %>
+  </ul>
+<% end %>
 
-<p style="color: green"><%= notice %></p>
-
-<h1>
-  <%= link_to "#{@lyrics_version.song.title}", @lyrics_version.song %>
-</h1>
+<% content_for :page_title do %>
+  Lyrics: <%= link_to "#{@lyrics_version.song.title}", @lyrics_version.song %>
+<% end %>
 
 <%= render @lyrics_version %>
 
-<br>
-<hr>
-
-<p>
+<section>
   Last change:
   <%= @lyrics_version.description %>
   <% if @lyrics_version.is_proposal %>
     (proposition)
   <% end %>
-</p>
+</section>
 
 
 <% if @lyrics_version.proposals.any? %>
-  <p>
+  <section>
     Change requests:
     <% @lyrics_version.proposals.each do |proposal| %>
     <div>
       <%= link_to "#{proposal.description}", proposal %>
     </div>
   <% end %>
-  </p>
+  </section>
 <% end %>
 
 <% if @lyrics_version.errors.any? %>
-  <div style="color: red">
+  <section style="color: red">
     <h2><%= pluralize(@lyrics_version.errors.count, "error") %> prohibited this @lyrics_version from being saved:</h2>
 
     <ul>
@@ -52,7 +55,7 @@
         <li><%= error.full_message %></li>
       <% end %>
     </ul>
-  </div>
+  </section>
 <% end %>
 
 <% if @lyrics_version.is_proposal %>

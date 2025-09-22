@@ -1,11 +1,5 @@
-<% content_for :title, "New song" %>
+<%= content_for :page_title, "New song" %>
 
-<h1>New song</h1>
+<% content_for :title, "News song" %>
 
 <%= render "form", song: @song %>
-
-<br>
-
-<div>
-  <%= link_to "Back to songs", songs_path %>
-</div>
