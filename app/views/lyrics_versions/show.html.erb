@@ -1,14 +1,14 @@
 <p>
   <% if @lyrics_version.previous_version.present? %>
-    <%= link_to "< Previous version", @lyrics_version.previous_version %> |
+    <%= link_to "< Previous version", @lyrics_version.previous_version %>
   <% end %>
 
   <% if @lyrics_version.is_proposal %>
-    <%= link_to "Edit this lyrics version", edit_lyrics_version_path(@lyrics_version) %>
+    | <%= link_to "Edit this lyrics version", edit_lyrics_version_path(@lyrics_version) %>
   <% end %>
 
   <% if @lyrics_version.next_version.present? %>
-    <%= link_to "Next version >", @lyrics_version.next_version %>
+    | <%= link_to "Next version >", @lyrics_version.next_version %>
   <% end %>
 </p>
 
