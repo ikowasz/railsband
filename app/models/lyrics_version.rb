@@ -13,7 +13,7 @@ class LyricsVersion < ApplicationRecord
 
   private
     def was_changed_since_last_refresh
-      errors.add(:previous_version, "lyrics were changed since last refresh") if conflict_exists?
+      errors.add(:previous_version, "lyrics version conflict") if conflict_exists?
     end
 
     def conflict_exists?
@@ -26,7 +26,7 @@ class LyricsVersion < ApplicationRecord
 
   def guard_readonly_attributes
     if !is_proposal and !just_accepted? and readonly_attributes_changed?
-      errors.add(:base, 'after accept lyrics are immutable')
+      errors.add(:base, "accepted lyrics are immutable")
       throw :abort
     end
   end
