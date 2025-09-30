@@ -8,7 +8,7 @@ class LyricsVersion < ApplicationRecord
   has_many :comments, through: :lyrics_annotations
   has_many :media_files, through: :lyrics_annotations
 
-  validate :was_changed_since_last_refresh, on: [:update, :create]
+  validate :was_changed_since_last_refresh, on: [ :update, :create ]
   before_update :guard_readonly_attributes
 
   def conflict

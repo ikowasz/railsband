@@ -71,7 +71,7 @@ class LyricsVersionsController < ApplicationController
       else
         @lyrics_version.is_proposal = true
         flash["error"] = @lyrics_version.errors.first.type if @lyrics_version.errors.any?
-        format.html { redirect_to diff_show_with_id_path(next_version_id: @lyrics_version.id, prev_version_id: @lyrics_version.previous_version.next_version.id, edit: true)}
+        format.html { redirect_to diff_show_with_id_path(next_version_id: @lyrics_version.id, prev_version_id: @lyrics_version.previous_version.next_version.id, edit: true) }
         format.json { render json: @lyrics_version.errors, status: :unprocessable_entity }
       end
     end

@@ -72,6 +72,6 @@ class MediaFilesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def media_file_params
-      params.expect(media_file: [:song_id, :uploader, :name ])
+      params.expect(media_file: [ :song_id, :uploader, :name ])
     end
 end
