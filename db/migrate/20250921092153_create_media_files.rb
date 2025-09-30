@@ -6,7 +6,7 @@ class CreateMediaFiles < ActiveRecord::Migration[8.0]
       t.json :uploader
       t.string :checksum
 
-      t.index [MediaFile.column[:song], :checksum], unique: true
+      t.index [ MediaFile.column[:song], :checksum ], unique: true
 
       t.timestamps
     end

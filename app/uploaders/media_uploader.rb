@@ -2,11 +2,11 @@ class MediaUploader < CarrierWave::Uploader::Base
   TYPE_EXTENSIONS = {
     image: %w[jpg jpeg gif png webp],
     audio: %w[wav wma wma mp3 mp4 ogg flac aac aiff],
-    video: %w[mp4 mov wmv avi mkv flv ogv 3gp vob webm rmvb],
+    video: %w[mp4 mov wmv avi mkv flv ogv 3gp vob webm rmvb]
   }
 
   MEDIA_EXTENSIONS = TYPE_EXTENSIONS.values.flatten
-  ALLOWED_CONTENT_TYPES = TYPE_EXTENSIONS.keys.map{ |type| type.to_s + "/" }
+  ALLOWED_CONTENT_TYPES = TYPE_EXTENSIONS.keys.map { |type| type.to_s + "/" }
 
   # Include RMagick, MiniMagick, or Vips support:
   # include CarrierWave::RMagick
