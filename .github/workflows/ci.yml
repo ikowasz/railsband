@@ -51,17 +51,26 @@ jobs:
           bundler-cache: true
 
       - name: Lint code for consistent style
-        run: bin/rubocop -f github
+        run: bin/rubocop -ES -D
 
   test:
     runs-on: ubuntu-latest
 
-    # services:
-    #  redis:
-    #    image: redis
-    #    ports:
-    #      - 6379:6379
-    #    options: --health-cmd "redis-cli ping" --health-interval 10s --health-timeout 5s --health-retries 5
+    services:
+      redis:
+        image: redis
+        env:
+          POSTGRES_DB: app_test
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+        ports:
+          - 6379:6379
+        options: >-
+          --health-cmd "redis-cli ping"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
     steps:
       - name: Install packages
         run: sudo apt-get update && sudo apt-get install --no-install-recommends -y build-essential git libyaml-dev pkg-config google-chrome-stable
@@ -78,7 +87,11 @@ jobs:
       - name: Run tests
         env:
           RAILS_ENV: test
-          # REDIS_URL: redis://localhost:6379/0
+          POSTGRES_DB: app_test
+          DATABASE_PORT: 6379
+          DATABASE_HOST: 0.0.0.0
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
         run: bin/rails db:test:prepare test test:system
 
       - name: Keep screenshots from failed system tests
