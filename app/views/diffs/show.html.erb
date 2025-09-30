@@ -13,18 +13,5 @@
   <%#= link_to "#" + (prev_version.description.empty? ? prev_version.id : prev_version.description), prev_version %>
 <!--  =&gt;-->
   <%#= link_to "#" + (next_version.description.empty? ? next_version.id : next_version.description), next_version %>
-
-  <% if next_version.errors.any? %>
-    <div style="color: red">
-      <h2><%= pluralize(next_version.errors.count, "error") %> prohibited this lyrics_version from being saved:</h2>
-
-      <ul>
-        <% next_version.errors.each do |error| %>
-          <li><%= error.full_message %></li>
-        <% end %>
-      </ul>
-    </div>
-  <% end %>
-
   <%= render partial: 'diff', locals: { diff: diff, next_version: next_version, prev_version: prev_version, edit: edit } %>
 </div>

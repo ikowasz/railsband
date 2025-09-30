@@ -1,4 +1,5 @@
-<%= form_with(model: song) do |form| %>
+<div class=<%= dom_class @song, :form %>
+ <%= form_with(model: song) do |form| %>
   <% if song.errors.any? %>
     <div style="color: red">
       <h2><%= pluralize(song.errors.count, "error") %> prohibited this song from being saved:</h2>
@@ -20,3 +21,4 @@
     <%= form.submit %>
   </p>
 <% end %>
+</div>
