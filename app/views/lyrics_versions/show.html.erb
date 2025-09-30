@@ -27,7 +27,7 @@
 <%= render @lyrics_version %>
 
 <section>
-  Last change:
+  Change:
   <%= @lyrics_version.description %>
   <% if @lyrics_version.is_proposal %>
     (proposition)
@@ -58,9 +58,23 @@
   </section>
 <% end %>
 
-<% if @lyrics_version.is_proposal %>
-  <%= button_to "Accept this request", [@lyrics_version, :accept], params: { id: @lyrics_version.id } %>
-  <br>
-  <%= button_to "Destroy this lyrics version", @lyrics_version, method: :delete %>
-<% end %>
+<div>
+  <% content_for :nav_links do %>
+    <li>
+      <%= link_to "diff", diff_show_with_id_path(next_version_id: @lyrics_version.id)  %>
+    </li>
+  <% end %>
+</div>
 
+<% if @lyrics_version.is_proposal %>
+  <nav>
+    <ul>
+      <li>
+        <%= button_to "Accept this request", [@lyrics_version, :accept], params: { id: @lyrics_version.id } %>
+      </li>
+      <li>
+        <%= button_to "Destroy this lyrics version", @lyrics_version, method: :delete %>
+      </li>
+    </ul>
+  </nav>
+<% end %>

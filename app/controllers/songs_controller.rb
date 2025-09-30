@@ -8,6 +8,7 @@ class SongsController < ApplicationController
 
   # GET /songs/1 or /songs/1.json
   def show
+    redirect_to new_song_lyrics_version_path(song_id: @song) unless @song.current_lyrics.present?
   end
 
   # GET /songs/new

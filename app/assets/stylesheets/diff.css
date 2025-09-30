@@ -1,0 +1,5 @@
+.d2h-diff-table td,
+.d2h-diff-table th {
+    padding: unset;
+    border-bottom: unset;
+}

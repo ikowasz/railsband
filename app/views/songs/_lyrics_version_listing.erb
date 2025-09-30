@@ -1,7 +1,7 @@
 <div>
   <% lyrics_versions.each do |lyrics_version| %>
     <div>
-      <%= link_to "#{lyrics_version.description}", lyrics_version %>
+      <%= link_to "#{lyrics_version.description.empty? ? lyrics_version.id : lyrics_version.description}", lyrics_version %>
     </div>
   <% end %>
 </div>

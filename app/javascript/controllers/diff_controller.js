@@ -6,6 +6,16 @@ import { FetchRequest } from "@rails/request.js"
 // Connects to data-controller="diff"
 export default class extends Controller {
   static targets = ["diffOutput", "textInput", "confirm"];
+  static values = {
+      prevVersionId: String,
+      nextVersionId: String,
+      songId: String,
+      showUrl: String,
+      nextVersionUrl: String,
+      resolveUrl: String,
+      isEditable: Boolean,
+  };
+
   styles = [
       'https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css',
       'https://cdn.jsdelivr.net/npm/diff2html/bundles/css/diff2html.min.css'
@@ -26,38 +36,56 @@ export default class extends Controller {
       this.updateDiff(diff)
   }
 
+  getDiffFiles() {
+      const next = this.nextVersionIdValue ?? 'Your changes';
+      const prev = this.prevVersionIdValue ?? 'Conflicting changes';
+
+      return [prev, next];
+  }
+
   updateDiff(diff) {
       const diffJson = Diff2Html.parse(diff)
-      diffJson[0].oldName = 'Your changes';
-      diffJson[0].newName = 'Conflicting changes';
+      const diffFiles = this.getDiffFiles();
+      const [oldName, newName] = diffFiles;
+      diffJson[0] = { ...diffJson[0], oldName, newName }
 
       this.diffOutputTarget.innerHTML = Diff2Html.html(diffJson, {
           outputFormat: 'side-by-side',
           drawFileList: false,
+          colorScheme: 'auto',
       })
   }
 
-  async change() {
-      const { value: contents, dataset } = this.textInputTarget
-      const { diffUrl, diffId } = dataset
-      const data = { id: diffId, text: contents }
-      const request = new FetchRequest('post', diffUrl, { body: JSON.stringify(data) })
+  async updateText(contents) {
+      const data = {
+          next_version_id: this.nextVersionIdValue,
+          prev_version_id: this.prevVersionIdValue,
+          text: contents,
+      }
+      const request = new FetchRequest('post', this.showUrlValue, {
+          body: JSON.stringify(data),
+          contentType: 'application/json',
+          responseKind: 'json',
+      })
       const response = await request.perform()
       if (response.ok) {
-          const json = await response.json;
-          this.updateDiff(json.diff)
+          const { diff } = await response.json;
+          this.updateDiff(diff)
       }
+  }
+
+  async change() {
+      const { value: contents } = this.textInputTarget
+      return this.updateText(contents)
   }
 
   async confirm() {
       const contents = this.textInputTarget.value
-      const { diffId } = this.textInputTarget.dataset;
-      const { diffResolveUrl, diffResolveId, diffSongId } = this.confirmTarget.dataset;
-      const data = { id: diffId, conflictId: diffResolveId, text: contents }
-      const request = new FetchRequest('post', diffResolveUrl, { body: JSON.stringify(data) })
+      const data = { prev_version_id: this.prevVersionIdValue, next_version_id: this.nextVersionIdValue, text: contents };
+      const request = new FetchRequest('post', this.resolveUrlValue, { body: JSON.stringify(data), redirect: false })
       const response = await request.perform()
       if (response.ok) {
-          window.location.href = '/songs/' + diffSongId
+          window.location.href = this.nextVersionUrlValue;
       }
   }
 }

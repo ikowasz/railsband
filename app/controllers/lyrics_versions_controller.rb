@@ -1,5 +1,5 @@
 class LyricsVersionsController < ApplicationController
-  before_action :set_lyrics_version, only: %i[ show edit update destroy accept conflict diff ]
+  before_action :set_lyrics_version, only: %i[ show edit update destroy accept ]
   before_action :set_song, only: %i[ index new ]
 
   # GET /lyrics_versions or /lyrics_versions.json
@@ -70,40 +70,11 @@ class LyricsVersionsController < ApplicationController
         format.json { render :show, status: :ok, location: @lyrics_version }
       else
         @lyrics_version.is_proposal = true
-        flash['error'] = @lyrics_version.errors.first.type if @lyrics_version.errors.any?
-        format.html { redirect_to lyrics_version_conflict_path(id: @lyrics_version.id)}
+        flash["error"] = @lyrics_version.errors.first.type if @lyrics_version.errors.any?
+        format.html { redirect_to diff_show_with_id_path(next_version_id: @lyrics_version.id, prev_version_id: @lyrics_version.previous_version.next_version.id, edit: true)}
         format.json { render json: @lyrics_version.errors, status: :unprocessable_entity }
       end
     end
-  end
-
-  def conflict
-    @lyrics_version.errors.add(:base, flash['error']) unless flash['error'].nil?
-    @previous_lyrics = @lyrics_version.previous_version
-    @conflict_lyrics = @previous_lyrics.next_version
-    @diff = Diffy::Diff.new(@lyrics_version.lyrics + "\n", @conflict_lyrics.lyrics + "\n", include_diff_info: true)
-  end
-
-  def diff
-    @new_text = params.expect(:text)
-    @conflict_lyrics = @lyrics_version.previous_version.next_version
-    @diff = Diffy::Diff.new(@new_text+ "\n", @conflict_lyrics.lyrics + "\n", include_diff_info: true)
-
-    render json: { diff: @diff.to_s(:text) }, status: :ok
-  end
-
-  def resolve
-    @new_text = params.expect(:text)
-    @lyrics_version = LyricsVersion.find(params.expect(:id))
-    @conflict_lyrics = LyricsVersion.find(params.expect(:conflictId))
-
-    unless @lyrics_version.song.current_lyrics.id.eql? @conflict_lyrics.id
-      @lyrics_version.errors.add(:previous_version_id, "there is a new conflict, please try again")
-      return redirect_to lyrics_version_conflict_path(id: @lyrics_version.id), status: :see_other
-    end
-
-    @lyrics_version.update({ previous_version: @conflict_lyrics, is_proposal: false, lyrics: @new_text })
-    redirect_to @lyrics_version.song, status: :ok
   end
 
   private

@@ -20,10 +20,14 @@
     <%= form.textarea :lyrics %>
   </div>
 
+  <% if lyrics_version.previous_version_id %>
   <p>
     <%= form.label :description, "Changes description", style: "display: block" %>
     <%= form.text_field :description %>
   </p>
+  <% else %>
+    <%= form.hidden_field :description %>
+  <% end %>
 
   <p>
     <%= form.submit %>

@@ -1,0 +1,25 @@
+<div data-controller="diff"
+     data-diff-prev-version-id-value="<%= prev_version.id %>"
+     data-diff-next-version-id-value="<%= next_version.id %>"
+     data-diff-song-id-value="<%= next_version.song.id %>"
+     data-diff-show-url-value="<%= diffs_show_path %>"
+     data-diff-resolve-url-value="<%= diffs_resolve_path %>"
+     data-diff-next-version-url-value="<%= lyrics_version_path(next_version) %>"
+     data-diff-is-editable-value="<%= edit %>"
+>
+  <div data-diff-target="diffOutput"><%= diff.to_s(:text) %></div>
+
+  <% if edit %>
+    <label>
+      New text:
+      <textarea
+        data-diff-target="textInput"
+        data-action="input->diff#change"
+      ><%= next_version.lyrics %></textarea>
+    </label>
+    <button data-diff-target="confirm"
+            data-diff-resolve-url="<%= diffs_resolve_path %>"
+            data-action="click->diff#confirm"
+    >Save</button>
+  <% end %>
+</div>
