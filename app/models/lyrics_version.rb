@@ -11,17 +11,18 @@ class LyricsVersion < ApplicationRecord
   validate :was_changed_since_last_refresh, on: [:update, :create]
   before_update :guard_readonly_attributes
 
+  def conflict
+    return previous_version.next_version if previous_version.present?
+    song.current_lyrics
+  end
+
+  def conflict?
+    conflict.present?
+  end
+
   private
     def was_changed_since_last_refresh
-      errors.add(:previous_version, "lyrics version conflict") if conflict_exists?
-    end
-
-    def conflict_exists?
-      query = self.class.where(is_proposal: false)
-                  .where(previous_version_id: previous_version_id)
-                  .where(song_id: song_id)
-      query = query.where("id != ?", id) if id.present?
-      query.any?
+      errors.add(:previous_version, "lyrics version conflict") if conflict? and !is_proposal
     end
 
   def guard_readonly_attributes

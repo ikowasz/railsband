@@ -1,8 +1,12 @@
 <% content_for :title, "New lyrics version" %>
 
-<p>
-  Editing lyrics to:
-  <%= link_to "#{@lyrics_version.song.title}", @lyrics_version.song %>
-</p>
+<h2>
+  <% if @lyrics_version.previous_version_id %>
+    Editing lyrics to:
+    <%= link_to "#{@lyrics_version.song.title}", @lyrics_version.song %>
+  <% else %>
+    <%= @lyrics_version.song.title %>
+  <% end %>
+</h2>
 
 <%= render "form", lyrics_version: @lyrics_version %>

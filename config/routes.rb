@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
   resources :songs, only: [ :index, :show, :new, :create, :edit, :update, :destroy ]
 
   resources :songs, only: [] do
@@ -11,11 +12,12 @@ Rails.application.routes.draw do
   resources :media_files, only: [ :show, :edit, :update, :create, :destroy ]
   resources :lyrics_versions, only: [ :show, :edit, :update, :create, :destroy ] do
     post "accept" => "lyrics_versions#accept"
-    get "conflict" => "lyrics_versions#conflict"
-    post "diff" => "lyrics_versions#diff"
-    post "resolve" => "lyrics_versions#resolve"
   end
-  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
+
+  get "diffs/show", to: "diffs#show"
+  post "diffs/show", to: "diffs#show"
+  get "diffs/show/:next_version_id", to: "diffs#show", as: :diff_show_with_id
+  post "diffs/resolve"
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
   # Can be used by load balancers and uptime monitors to verify that the app is live.

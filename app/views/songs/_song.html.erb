@@ -15,10 +15,10 @@
   <% end %>
 
 
-  <% if song.lyrics_history.count > 1 %>
+  <% if song.lyrics_history_not_first.any? %>
     <section>
       <h2>Change history:</h2>
-      <%= render "songs/lyrics_version_listing", lyrics_versions: song.lyrics_history %>
+      <%= render "songs/lyrics_version_listing", lyrics_versions: song.lyrics_history_not_first %>
     </section>
   <% end %>
 
